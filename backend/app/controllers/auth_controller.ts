@@ -15,12 +15,19 @@ export default class AuthController {
     await this.queueService.initConnection()
     await this.queueService.createQueue(user.username)
 
+    await this.queueService.registerMessageListener(user.username, (message) => {
+      console.log(`${user.username} received: ${message?.content.toString()}`)
+      // notify frontend
+    })
+
     return user
   }
 
-  async login({ request }: HttpContext) {
+  async login({ request, auth }: HttpContext) {
     const { email, password } = await request.validateUsing(loginValidator)
     const user = await User.verifyCredentials(email, password)
+
+    await auth.use('web').login(user)
 
     return user
   }

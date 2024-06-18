@@ -23,10 +23,10 @@ export class QueueService {
     this.channel?.publish(this.exchangeName, this.routingKey, Buffer.from(message))
   }
 
-  async receiveMessage(queueName: string) {
-    console.log('Waiting for messages...')
-    this.channel?.consume(queueName, (message) => {
-      console.log('Received message:', message?.content.toString())
-    })
+  async registerMessageListener(
+    queueName: string,
+    callback: (message: amqp.ConsumeMessage | null) => void
+  ) {
+    this.channel?.consume(queueName, callback)
   }
 }
