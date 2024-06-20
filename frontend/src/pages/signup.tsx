@@ -38,7 +38,7 @@ export function Signup() {
     console.log(response);
   };
   return (
-    <div className="grid place-items-center min-h-screen color-red-500">
+    <div className="grid place-items-center min-h-screen">
       <h1>INSCRIPTION</h1>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <input
