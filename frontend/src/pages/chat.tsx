@@ -4,10 +4,16 @@ import EmojiPicker from "emoji-picker-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../components/popover";
 import { FaceSmileIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import background from "../assets/background.jpg";
+import useAuth from "../hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 export function Chat() {
   const [message, setMessage] = useState<string>("");
+  const { user } = useAuth();
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <main className="grid grid-cols-[1fr,3fr] grid-rows-[1fr,8fr,1fr] min-h-screen border">
@@ -28,7 +34,7 @@ export function Chat() {
             height="50"
             className="rounded-full"
           />
-          <div className="font-semibold">Paul-Henry Ngounou</div>
+          <div className="font-semibold">{user.username}</div>
         </div>
       </div>
 

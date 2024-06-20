@@ -5,6 +5,9 @@ import { z } from "zod";
 import { Input } from "../components/input";
 import { FormError } from "../components/form-error";
 import { Button } from "../components/button";
+import useAuth from "../hooks/useAuth";
+import { User } from "../types/user";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -16,12 +19,20 @@ export function Login() {
     resolver: zodResolver(formSchema),
   });
 
+  const navigate = useNavigate();
+
+  const { setUser } = useAuth();
+
   const onSubmit = async ({ email, password }: z.infer<typeof formSchema>) => {
-    const response = await axios.post("http://localhost:3333/login", {
+    const response = await axios.post<User>("http://localhost:3333/login", {
       email,
       password,
     });
-    console.log(response);
+
+    setUser(response.data);
+    localStorage.setItem("user", JSON.stringify(response.data));
+
+    navigate("/");
   };
   return (
     <main className="grid place-items-center min-h-screen text-xl">
