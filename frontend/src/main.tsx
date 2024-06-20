@@ -5,12 +5,17 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Signup } from "./pages/signup.tsx";
 import Root from "./pages/root.tsx";
 import { Login } from "./pages/login.tsx";
+import { Chat } from "./pages/chat.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     children: [
+      {
+        path: "/",
+        element: <Chat />,
+      },
       {
         path: "/signup",
         element: <Signup />,
