@@ -58,6 +58,7 @@ export function Signup() {
             <Input
               type="text"
               placeholder="Nom d'utilisateur"
+              required
               {...form.register("username")}
             />
           </div>
@@ -70,6 +71,7 @@ export function Signup() {
             <Input
               type="email"
               placeholder="Email"
+              required
               {...form.register("email")}
             />
           </div>
@@ -82,6 +84,7 @@ export function Signup() {
             <Input
               type="password"
               placeholder="Mot de passe"
+              required
               {...form.register("password")}
             />
           </div>
@@ -96,6 +99,7 @@ export function Signup() {
             <Input
               type="password"
               placeholder="Confirmer mot de passe"
+              required
               {...form.register("passwordConfirmation")}
             />
           </div>

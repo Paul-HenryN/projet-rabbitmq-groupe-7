@@ -2,6 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Input } from "../components/input";
+import { FormError } from "../components/form-error";
+import { Button } from "../components/button";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -21,25 +24,31 @@ export function Login() {
     console.log(response);
   };
   return (
-    <div>
-      <h1>CONNEXION</h1>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <input
-          type="email"
-          placeholder="Email"
-          {...form.register("email")}
-        ></input>
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          {...form.register("password")}
-        ></input>
-        {form.formState.errors.password &&
-          form.formState.errors.password.message && (
-            <p>{form.formState.errors.password.message}</p>
+    <main className="grid place-items-center min-h-screen text-xl">
+      <div className="flex flex-col items-center gap-8">
+        <h1>Connexion</h1>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-3"
+        >
+          {form.formState.errors.root && (
+            <FormError>{form.formState.errors.root.message}</FormError>
           )}
-        <button type="submit">Se connecter</button>
-      </form>
-    </div>
+          <Input
+            type="email"
+            placeholder="Email"
+            {...form.register("email")}
+            required
+          />
+          <Input
+            type="password"
+            placeholder="Mot de passe"
+            {...form.register("password")}
+            required
+          />
+          <Button type="submit">Se connecter</Button>
+        </form>
+      </div>
+    </main>
   );
 }
