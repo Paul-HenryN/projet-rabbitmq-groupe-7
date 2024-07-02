@@ -1,5 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { QueueService } from '../queue/queue_service.js'
+import { QueueService } from '../services/queue_service.js'
 import { inject } from '@adonisjs/core'
 import { createMessageValidator } from '#validators/message'
 
@@ -9,9 +9,9 @@ export default class MessagesController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {
+  async store({ request, auth }: HttpContext) {
     const { content } = await request.validateUsing(createMessageValidator)
     await this.queueService.initConnection()
-    await this.queueService.sendMessage(content)
+    await this.queueService.sendMessage(JSON.stringify({ sender: auth.user, content }))
   }
 }

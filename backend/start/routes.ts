@@ -15,3 +15,6 @@ import { middleware } from './kernel.js'
 router.post('/messages', [MessagesController, 'store']).use(middleware.auth())
 router.post('/signup', [AuthController, 'register'])
 router.post('/login', [AuthController, 'login'])
+router.delete('/logout', [AuthController, 'logout']).use(middleware.auth())
+router.get('/user', [AuthController, 'user']).use(middleware.auth())
+router.get('/online-users', [AuthController, 'onlineUsers']).use(middleware.auth())

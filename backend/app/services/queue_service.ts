@@ -27,6 +27,6 @@ export class QueueService {
     queueName: string,
     callback: (message: amqp.ConsumeMessage | null) => void
   ) {
-    this.channel?.consume(queueName, callback)
+    this.channel?.consume(queueName, callback, { noAck: true })
   }
 }

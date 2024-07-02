@@ -57,11 +57,13 @@
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/lucid": "^20.6.0",
     "@adonisjs/session": "^7.4.1",
+    "@adonisjs/transmit": "^1.0.2",
     "@vinejs/vine": "^2.0.0",
     "amqplib": "^0.10.4",
     "better-sqlite3": "^11.0.0",
     "luxon": "^3.4.4",
-    "reflect-metadata": "^0.2.2"
+    "reflect-metadata": "^0.2.2",
+    "socket.io": "^4.7.5"
   },
   "hotHook": {
     "boundaries": [

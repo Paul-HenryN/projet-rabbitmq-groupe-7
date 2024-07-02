@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "../components/input";
@@ -7,7 +6,8 @@ import { FormError } from "../components/form-error";
 import { Button } from "../components/button";
 import useAuth from "../hooks/useAuth";
 import { User } from "../types/user";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { axios } from "../lib/axios";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -21,10 +21,14 @@ export function Login() {
 
   const navigate = useNavigate();
 
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
+
+  if (user) {
+    return <Navigate to="/" replace />;
+  }
 
   const onSubmit = async ({ email, password }: z.infer<typeof formSchema>) => {
-    const response = await axios.post<User>("http://localhost:3333/login", {
+    const response = await axios.post<User>("/login", {
       email,
       password,
     });
@@ -34,6 +38,7 @@ export function Login() {
 
     navigate("/");
   };
+
   return (
     <main className="grid place-items-center min-h-screen text-xl">
       <div className="flex flex-col items-center gap-8">
@@ -58,6 +63,12 @@ export function Login() {
             required
           />
           <Button type="submit">Se connecter</Button>
+          <p className="text-sm">
+            Not registered?{" "}
+            <a href="/signup" className="underline">
+              Register
+            </a>
+          </p>
         </form>
       </div>
     </main>

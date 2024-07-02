@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "../components/input";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
+import { axios } from "../lib/axios";
+import useAuth from "../hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 const formSchema = z
   .object({
@@ -40,8 +42,16 @@ export function Signup() {
       email,
       password,
     });
+
     console.log(response);
   };
+
+  const { user } = useAuth();
+
+  if (user) {
+    return <Navigate to="/" replace />;
+  }
+
   return (
     <main className="grid place-items-center min-h-screen text-xl">
       <div className="flex flex-col items-center gap-8">
@@ -105,6 +115,13 @@ export function Signup() {
           </div>
 
           <Button type="submit">S'inscrire</Button>
+
+          <p className="text-sm">
+            Already registered?{" "}
+            <a href="/login" className="underline">
+              login
+            </a>
+          </p>
         </form>
       </div>
     </main>
