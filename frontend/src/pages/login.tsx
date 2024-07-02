@@ -42,7 +42,7 @@ export function Login() {
   return (
     <main className="grid place-items-center min-h-screen text-xl">
       <div className="flex flex-col items-center gap-8">
-        <h1>Connexion</h1>
+        <h1>Login</h1>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-3"
@@ -58,11 +58,11 @@ export function Login() {
           />
           <Input
             type="password"
-            placeholder="Mot de passe"
+            placeholder="Password"
             {...form.register("password")}
             required
           />
-          <Button type="submit">Se connecter</Button>
+          <Button type="submit">Login</Button>
           <p className="text-sm">
             Not registered?{" "}
             <a href="/signup" className="underline">

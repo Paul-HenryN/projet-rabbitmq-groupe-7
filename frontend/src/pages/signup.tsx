@@ -6,24 +6,20 @@ import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
 import { axios } from "../lib/axios";
 import useAuth from "../hooks/useAuth";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const formSchema = z
   .object({
-    username: z.string({ required_error: "Ce champ est obligatoire." }),
-    email: z.string({ required_error: "Ce champ est obligatoire." }).email(),
-    password: z.string({ required_error: "Ce champ est obligatoire." }).min(6, {
-      message: "Votre mot de passe doit contenir au moins 6 caractères.",
-    }),
-    passwordConfirmation: z
-      .string({ required_error: "Ce champ est obligatoire." })
-      .min(6),
+    username: z.string({}),
+    email: z.string({}).email(),
+    password: z.string({}).min(6),
+    passwordConfirmation: z.string({}).min(6),
   })
   .refine(
     ({ password, passwordConfirmation }) => password === passwordConfirmation,
     {
       path: ["passwordConfirmation"],
-      message: "Veuillez entrer le même mot de passe pour la confirmation.",
+      message: "Passwords must match.",
     }
   );
 
@@ -31,6 +27,9 @@ export function Signup() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
+  const navigate = useNavigate();
+
+  const { user } = useAuth();
 
   const onSubmit = async ({
     username,
@@ -43,10 +42,8 @@ export function Signup() {
       password,
     });
 
-    console.log(response);
+    navigate("/login");
   };
-
-  const { user } = useAuth();
 
   if (user) {
     return <Navigate to="/" replace />;
@@ -55,7 +52,7 @@ export function Signup() {
   return (
     <main className="grid place-items-center min-h-screen text-xl">
       <div className="flex flex-col items-center gap-8">
-        <h1>Inscription</h1>
+        <h1>Register</h1>
 
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -67,7 +64,7 @@ export function Signup() {
             )}
             <Input
               type="text"
-              placeholder="Nom d'utilisateur"
+              placeholder="Username"
               required
               {...form.register("username")}
             />
@@ -93,7 +90,7 @@ export function Signup() {
               )}
             <Input
               type="password"
-              placeholder="Mot de passe"
+              placeholder="Password"
               required
               {...form.register("password")}
             />
@@ -108,13 +105,13 @@ export function Signup() {
               )}
             <Input
               type="password"
-              placeholder="Confirmer mot de passe"
+              placeholder="Confirm Password"
               required
               {...form.register("passwordConfirmation")}
             />
           </div>
 
-          <Button type="submit">S'inscrire</Button>
+          <Button type="submit">Register</Button>
 
           <p className="text-sm">
             Already registered?{" "}

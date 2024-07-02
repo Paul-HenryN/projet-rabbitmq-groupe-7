@@ -46,27 +46,19 @@ Ce schéma met en évidence la séparation des responsabilités entre les diffé
 
    Renommer .env.example en .env et configurer les variables d'environnement nécessaires.
 
-4. Créer un dossier pour la base de données SQLite
-
-   À la racine du projet, créez un dossier nommé tmp pour la base de données SQLite.
-
-   ```bash
-       mkdir tmp
-   ```
-
-5. Lancer les migrations
+4. Lancer les migrations
 
    ```bash
        node ace migration:run
    ```
 
-6. Lancer Docker pour RabbitMQ
+5. Lancer Docker pour RabbitMQ
 
    ```bash
        docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management
    ```
 
-7. Lancer l'application
+6. Lancer l'application
 
    Le backend avec :
 
