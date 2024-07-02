@@ -33,7 +33,7 @@ Ce schéma met en évidence la séparation des responsabilités entre les diffé
 
    ```bash
        git clone https://github.com/Paul-HenryN/projet-rabbitmq-groupe-7.git
-       cd projet-rabbitmq-groupe-7.git
+       cd projet-rabbitmq-groupe-7
    ```
 
 2. Installer les dépendances
